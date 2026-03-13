@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vennela Reddy Kuruguntla - Portfolio</title>
+    <!-- Link to our external CSS file in the static directory -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Import Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Three.js and Vanta.js for 3D AI node effect -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+</head>
+
+<body>
+    <!-- 3D Background Container -->
+    <div id="background-wrapper" style="position: fixed; z-index: -1; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;">
+        <!-- Vanta JS canvas -->
+        <div id="vanta-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+        <!-- 3D Parallax Profile Image -->
+        <div id="profile-bg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 110vw; height: 110vh; background-image: url('{{ url_for('static', filename='images/profile.jpg') }}'); background-size: cover; background-position: center; opacity: 0.15; mix-blend-mode: luminosity; transition: transform 0.1s ease-out; pointer-events: none;"></div>
+    </div>
+
+    <header class="header">
+        <div class="logo">
+            <a href="/" style="text-decoration: none; color: inherit;">
+                <span class="logo-me">Vennela Reddy</span>
+                <span class="logo-first">Kuruguntla</span>
+            </a>
+        </div>
+        <nav class="nav-links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#blog">Blog</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero" style="min-height: 60vh; display: flex; align-items: center;">
+            <div class="hero-text"
+                style="background: rgba(14, 17, 23, 0.8); padding: 2.5rem; border-radius: 16px; backdrop-filter: blur(8px); border: 1px solid #1f232b;">
+                <p class="subtitle">AI & Python Developer</p>
+                <h1>Building Intelligent Systems<br>with AI Agents.</h1>
+                <div class="tech-stack" style="color: var(--primary-color);">
+                    <strong>Focus:</strong> AI Agents, LLM Orchestration, Python
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <h2>My Projects</h2>
+            <div class="grid">
+                <a href="https://github.com/vennelareddykuruguntla" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="card" style="background: rgba(21, 24, 33, 0.85); backdrop-filter: blur(8px);">
+                        <h3>Project 1</h3>
+                        <p>A simple python tool to automate daily tasks.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/vennelareddykuruguntla" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="card" style="background: rgba(21, 24, 33, 0.85); backdrop-filter: blur(8px);">
+                        <h3>Project 2</h3>
+                        <p>A web application built using Python and Flask.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+        </section>
+
+        <section id="blog" class="projects">
+            <h2>Latest Insights</h2>
+            <div class="grid">
+                {% if blogs %}
+                    {% for blog in blogs %}
+                    <a href="/blog/{{ blog.slug }}" style="text-decoration: none; color: inherit;">
+                        <div class="card" style="background: rgba(21, 24, 33, 0.85); backdrop-filter: blur(8px);">
+                            <h3>{{ blog.title }}</h3>
+                            <p style="color: var(--primary-color); font-size: 0.8rem; margin-top: -10px; margin-bottom: 10px;">{{ blog.date }}</p>
+                            <p>{{ blog.summary }}</p>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <p style="color: var(--text-muted); font-style: italic;">No blog posts available yet. Check back soon!</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- Initialize Vanta.js 3D effect -->
+    <script>
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xf3a333,      // Primary orange color
+            backgroundColor: 0x0e1117, // Dark background
+            points: 12.00,
+            maxDistance: 22.00,
+            spacing: 18.00
+        });
+
+        // 3D Parallax Effect for Profile Image
+        document.addEventListener('mousemove', (e) => {
+            const bg = document.getElementById('profile-bg');
+            if (bg) {
+                // Calculate movement (subtle shift opposite to mouse)
+                const x = (window.innerWidth / 2 - e.pageX) / 45;
+                const y = (window.innerHeight / 2 - e.pageY) / 45;
+                
+                // Keep the -50% -50% centering, add the dynamic x/y shift
+                bg.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(1.05)`;
+            }
+        });
+    </script>
+</body>
+
+</html>
