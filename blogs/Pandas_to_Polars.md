@@ -1,3 +1,8 @@
+---
+title: Pandas to Polars like sedan to jet feeling
+date: March 15, 2026
+---
+
 # Beyond the DataFrame: Why I’m Trading Pandas for Polars
 
 For the longest time, `import pandas as pd` was the first line of code I wrote every single morning. It’s the industry standard for a reason. But lately, as I’ve been pushing into more complex GenAI workflows and massive data pipelines, I hit a wall. Memory errors, sluggish execution, and the dreaded "waiting for the cell to finish" became my new normal.
